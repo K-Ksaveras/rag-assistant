@@ -1,4 +1,5 @@
-RAG System for Netflix Movies: Semantic Search, Embeddings & LangChain Pipeline
+RAG System for Netflix Movies: 
+Semantic Search, Embeddings & LangChain Pipeline
 A production-ready Retrieval-Augmented Generation (RAG) system that intelligently answers questions about Netflix movies using semantic search and local LLM inference.
 
 Main Functionality
