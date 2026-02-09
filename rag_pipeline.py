@@ -1,7 +1,7 @@
 """
 RAG Pipeline Module
 Initializes all components needed for the Netflix Q&A assistant
-This module is imported by app.py to get access to retriever and rag_chain
+This module is imported by app.py to get access to retriever and rag_chain - Copilot Generated
 """
 
 import pandas as pd

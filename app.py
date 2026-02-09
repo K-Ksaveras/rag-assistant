@@ -1,6 +1,6 @@
 """
 Flask API for Netflix RAG Assistant
-Imports RAG pipeline from rag_pipeline.py
+Imports RAG pipeline from rag_pipeline.py.
 """
 
 from flask import Flask, request, jsonify
@@ -80,12 +80,6 @@ def home():
     </html>
     '''
 
-# HELPER FUNCTION: ask_question()
-# Why helper function separately?
-# - Separates "core RAG logic" from "HTTP layer" (clean architecture)
-# - Reusable: Can call from multiple endpoints, command-line, scheduled tasks, etc.
-# - Testable: Can test logic without mocking HTTP requests
-# - Mirrors industry pattern used by OpenAI, LangChain, Anthropic examples
 def ask_question(query):
     """
     Get answer from RAG system given a question string.
@@ -95,15 +89,15 @@ def ask_question(query):
     Why return a dict? Flask's jsonify() will convert it to JSON automatically.
     """
     # Step 1: Retrieve relevant documents (top-3 most similar)
-    # Why retrieve first? Gives LLM context so answers are grounded in knowledge base.
+    # Gives LLM context so answers are grounded in knowledge base.
     docs = retriever.invoke(query)
     
     # Step 2: Generate answer using RAG chain
-    # Why RAG chain? Combines retrieved context + LLM to avoid hallucination.
+    # Combines retrieved context + LLM to avoid hallucination.
     answer = rag_chain.invoke(query)
     
     # Step 3: Return both answer + source titles for transparency
-    # Why include sources? User can verify answer came from real Netflix movies (audit trail).
+    # User can verify answer came from real Netflix movies (audit trail).
     # Why metadata['title']? Each document carries metadata through pipeline for this purpose.
     return {
         "answer": answer,
@@ -111,11 +105,8 @@ def ask_question(query):
     }
 
 
-# 10c: Define POST /ask endpoint
-# Why POST? Client sends data (question) to server, which processes and returns answer.
-# - POST is semantically correct for "create" or "process" actions
-# - GET should be read-only (no side effects), while POST can trigger work
-# Why /ask path? Simple, clear, describes what endpoint does (answer a question)
+# 10c: Client sends data (question) to server, which processes and returns answer.
+
 @app.route('/ask', methods=['POST'])
 def ask_endpoint():
     """
@@ -128,29 +119,22 @@ def ask_endpoint():
         {"answer": "...", "sources": []}
     """
     # Step 1: Extract JSON from HTTP request body
-    # Why request.get_json()? Parses Content-Type: application/json body into Python dict
     data = request.get_json()
     
     # Step 2: Get the question string from request payload
-    # Why .get('question')? Safe access - returns None if 'question' key missing (avoid KeyError)
+    # Safe access - returns None if 'question' key missing (avoid KeyError)
     question = data.get('question')
     
     # Step 3: Call helper function to get answer + sources
-    # Why separate helper? Code is reusable + testable (already defined above)
     result = ask_question(question)
     
     # Step 4: Return as JSON response
-    # Why jsonify()? Converts Python dict to JSON + sets Content-Type: application/json header
-    # Why return JSON? Client expects standard format (browser, mobile app, JavaScript, etc.)
+    # Converts Python dict to JSON + sets Content-Type: application/json header
+    
     return jsonify(result)
 
 
 # 10d: Define GET /health endpoint
-# Why health check endpoint? Production best practice:
-# - Load balancers use /health to detect if server is alive
-# - Clients can check if API is up before sending requests (fail-fast pattern)
-# - Continuous monitoring tools (Datadog, Prometheus) scrape /health regularly
-# Why GET? Health check is read-only operation (no side effects, no data modification)
 @app.route('/health', methods=['GET'])
 def health():
     """
