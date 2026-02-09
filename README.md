@@ -34,6 +34,8 @@ curl -X POST http://localhost:5500/ask \
   -d '{"question": "What are some comedy movies?"}'
 
 
+EXAMPLES:
+
 Response example(aswer part only):
 
 Question: What documentaries are available on Nefflix?
