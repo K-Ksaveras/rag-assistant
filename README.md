@@ -1,16 +1,55 @@
-RAG System for Netflix Movies: 
-Semantic Search, Embeddings & LangChain Pipeline
-A production-ready Retrieval-Augmented Generation (RAG) system that intelligently answers questions about Netflix movies using semantic search and local LLM inference.
+🎬 RAG Assistant – Netflix Movies Q&A
 
-Main Functionality
-Semantic Search: 6,020 Netflix movies chunked into 7,655 documents and indexed in Chroma vector database
-Context-Aware Answers: Uses HuggingFace embeddings + TinyLlama LLM to generate accurate, grounded responses
-REST API: Flask endpoints for easy integration into applications
-Zero API Costs: Runs entirely locally on CPU — no external API calls or subscription fees
+A production-ready Retrieval-Augmented Generation (RAG) system that answers questions about Netflix movies using semantic search and local LLM inference.
+
+Built to demonstrate:
+
+Embeddings
+
+Vector databases
+
+LangChain LCEL pipelines
+
+Local LLM integration
+
+REST API deployment
 
 
+🚀 What This Project Does
 
-SETUP:
+This system:
+
+Loads 6,020 Netflix movie records
+
+Splits them into 7,655 semantic chunks
+
+Creates embeddings using all-MiniLM-L6-v2
+
+Stores vectors in a persistent Chroma database
+
+Retrieves relevant context using semantic search
+
+Generates grounded answers using TinyLlama
+
+Exposes the system via a Flask REST API
+
+All runs locally on CPU — no external API costs.
+
+
+📂 Project Structure
+
+rag-assistant/
+│
+├── rag_assistant.ipynb      # Data pipeline (builds vector store)
+├── rag_pipeline.py          # RAG initialization logic
+├── app.py                   # Flask API
+├── data/
+│   ├── documents.csv
+│   └── vectorstore/
+└── README.md
+
+
+⚙️ SETUP:
 
 Clone the Repository:
 git clone https://github.com/K-Ksaveras/rag-assistant.git
@@ -27,7 +66,8 @@ Build the Vector Store (One-time setup):
 jupyter notebook rag_assistant.ipynb
 
 Start the API:
-🚀 Flask API running on http://127.0.0.1:5500
+python app.py
+Flask API running on http://127.0.0.1:5500
 
 Step 6: Test the API
 curl -X POST http://localhost:5500/ask \
@@ -35,7 +75,7 @@ curl -X POST http://localhost:5500/ask \
   -d '{"question": "What are some comedy movies?"}'
 
 
-EXAMPLES:
+OUTPUT EXAMPLES:
 
 Response example(aswer part only):
 
@@ -62,3 +102,40 @@ Localhost tested in termnal:
   -H "Content-Type: application/json" \
   -d '{"question": "What are some comedy movies?"}'
 {"answer":"You are a Netflix movie expert. Answer ONLY questions about Netflix movies based on the context below.\nIf the question is not about Netflix movies, say you can only help with Netflix movie questions.\nBe direct and concise.\n\nContext: \nIn six live installments, John Mulaney explores Los Angeles during a week when pretty much every single funny person is in town. Genre: Comedy, Talk-Show Type: tv Release Year: 2024 Director: Unknown Actors: John Mulaney, Richard Kind John Mulaney Richard Kind IMDB Rating: 7.1 Available in 130 countries\n\n---\n\nIn six live installments, John Mulaney explores Los Angeles during a week when pretty much every single funny person is in town. Genre: Comedy, Talk-Show Type: tv Release Year: 2024 Director: Unknown Actors: John Mulaney, Richard Kind John Mulaney Richard Kind IMDB Rating: 7.1 Available in 130 countries\n\n---\n\nJack Whitehall and his father embark on a globe-trotting trip to find answers to the big questions facing the comedian after becoming a dad. Genre: Comedy, Documentary Type: tv Release Year: 2024 Director: Unknown Actors: Jack Whitehall, Michael Whitehall Jack Whitehall Michael Whitehall IMDB Rating: 6.7 Available in 129 countries\n\nQuestion: What are some comedy movies?\n\nAnswer:\n1. Ghostbusters (1984)\n2. The Jerk (1979)\n3. Porky's (1982)\n4. Anchorman: The Legend of Ron Burgundy (2004)\n5. Shaun of the Dead (2004)\n6. The Hangover (2009)\n7. Forgetting Sarah Marshall (2008","sources":["John Mulaney Presents: Everybody's in LA John Mulaney Presents Everybodys in LA","John Mulaney Presents: Everybody's in LA John Mulaney Presents Everybodys in LA","Jack Whitehall: Fatherhood with My Father Jack Whitehall Fatherhood with My Father"]}
+
+
+🧩 Key Engineering Decisions
+
+Chunk size 500 + overlap 50 → balances recall & precision
+
+Persistent Chroma store → avoids re-embedding
+
+LCEL pipeline syntax → modern LangChain design
+
+Local LLM → zero API cost & privacy-safe
+
+Separation of concerns → notebook for data, Python modules for production
+
+
+
+🔄 Where This Architecture Can Be Reused
+
+The same RAG system structure can be adapted for:
+
+🏦 Internal Knowledge Assistants
+Answering questions over HR policies, compliance documents, or internal banking procedures.
+
+📚 Educational Q&A Systems
+Retrieval-based tutoring systems grounded in textbooks or course materials.
+
+🏢 Company Documentation Search
+Semantic search over technical docs, onboarding guides, or support manuals.
+
+🛍 E-Commerce Product Assistants
+Answering product questions using structured catalog data.
+
+⚖️ Legal / Regulatory Search
+Querying contracts, policies, or regulatory documents with contextual grounding.
+
+🧾 Customer Support Automation
+Combining retrieval with LLM generation to provide accurate, source-backed answers
