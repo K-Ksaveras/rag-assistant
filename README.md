@@ -13,14 +13,12 @@ This project implements a fully local Retrieval-Augmented Generation (RAG) syste
 📂 Project Structure
 
 rag-assistant/
-├── rag_assistant.ipynb
-├── rag_pipeline.py
-├── app.py
-├── data/
-│   ├── documents.csv
-│   └── vectorstore/
-└── README.md
-
+→ rag_assistant.ipynb (build vector store)
+→ rag_pipeline.py (RAG logic)
+→ app.py (Flask API)
+→ data/documents.csv (Netflix dataset)
+→ data/vectorstore/ (Chroma persistence)
+→ README.md
 
 
 ⚙️ SETUP:
