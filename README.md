@@ -2,33 +2,25 @@
 
 A production-ready Retrieval-Augmented Generation (RAG) system that answers questions about Netflix movies using semantic search and local LLM inference.
 
-Built to demonstrate: Embeddings,  Vector databases,  LangChain LCEL pipelines, Local LLM integration,  REST API deployment
+Built to demonstrate: Embeddings, Vector databases, LangChain LCEL pipelines, Local LLM integration and REST API deployment.
 
 
 🚀 What This Project Does
 
-This project implements a fully local Retrieval-Augmented Generation (RAG) system built on Netflix movie data.
-
-It ingests 6,020 movie records and splits them into 7,655 semantically meaningful chunks to improve retrieval precision. Each chunk is converted into dense vector embeddings using the lightweight all-MiniLM-L6-v2 model and stored in a persistent Chroma vector database for efficient semantic search.
-
-When a user submits a question, the system retrieves the most relevant movie contexts using similarity search and passes them to a local TinyLlama language model to generate grounded, context-aware answers.
-
-The entire pipeline is exposed through a Flask REST API, making it production-ready and easy to integrate into other applications.
-
-Everything runs locally on CPU — no external API calls, subscriptions, or usage costs required.
+This project implements a fully local Retrieval-Augmented Generation (RAG) system that answers questions about Netflix movies using semantic search and LLM inference. It ingests 6,020 movie records, splits them into 7,655 semantic chunks, generates embeddings with all-MiniLM-L6-v2, and stores them in a persistent Chroma vector database for efficient similarity search. When a user submits a query, the system retrieves the most relevant context and generates grounded responses using TinyLlama, all exposed through a Flask REST API. The entire pipeline runs locally on CPU with zero external API costs.
 
 
 📂 Project Structure
 
 rag-assistant/
-│
-├── rag_assistant.ipynb      # Data pipeline (builds vector store)
-├── rag_pipeline.py          # RAG initialization logic
-├── app.py                   # Flask API
+├── rag_assistant.ipynb
+├── rag_pipeline.py
+├── app.py
 ├── data/
 │   ├── documents.csv
 │   └── vectorstore/
 └── README.md
+
 
 
 ⚙️ SETUP:
